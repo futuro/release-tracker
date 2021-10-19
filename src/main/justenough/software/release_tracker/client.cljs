@@ -1,25 +1,24 @@
 (ns justenough.software.release-tracker.client
   (:require [com.fulcrologic.fulcro.application :as app]
-            [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
-            [com.fulcrologic.fulcro.dom :as dom]
-            [justenough.software.release-tracker.secrets :as secrets]))
-
-(defonce app (app/fulcro-app))
-
-(defsc Root [this props]
-  (dom/div "TODO"))
+            [com.fulcrologic.fulcro.components :as comp]
+            [justenough.software.release-tracker.application :refer [app]]
+            [justenough.software.release-tracker.ui :as ui]))
 
 (defn ^:export init
   "This is our shadow-cljs entry point. See `shadow-cljs.edn` for how
   this is configured"
   []
-  (app/mount! app Root "app")
+  (app/mount! app ui/Root "app")
+  (comp/transact! app [(ui/create-ghub-client nil)])
+  (comp/transact! app [(ui/fetch-user nil)])
   (js/console.log "Loaded"))
 
 (defn ^:export refresh
   "This is a dev helper that shadow-cljs will call on every hot-reload
   of the source code."
   []
-  (app/mount! app Root "app")
+  ;; re-mounting will cause forced UI refresh
+  (app/mount! app ui/Root "app")
+  ;; 3.3.0+ Make sure dynamic queries are refreshed
   (comp/refresh-dynamic-queries! app)
   (js/console.log "Hot reload"))
