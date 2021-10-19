@@ -2,3 +2,4 @@
 /.cpcache/
 /.shadow-cljs/
 /resources/public/js
+/src/main/justenough/software/secrets.cljs
