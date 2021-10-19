@@ -3,7 +3,7 @@
  :builds   {:main {:target     :browser
                    :output-dir "resources/public/js/main"
                    :asset-path "/js/main"
-                   :modules    {:main {:init-fn justenough.software.client/init
-                                       :entries [justenough.software.client]}}
-                   :devtools   {:after-load justenough.software.client/refresh
+                   :modules    {:main {:init-fn justenough.software.release-tracker.client/init
+                                       :entries [justenough.software.release-tracker.client]}}
+                   :devtools   {:after-load justenough.software.release-tracker.client/refresh
                                 :preloads   [com.fulcrologic.fulcro.inspect.preload]}}}}
