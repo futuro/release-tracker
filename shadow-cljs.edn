@@ -3,7 +3,7 @@
  :builds   {:main {:target     :browser
                    :output-dir "resources/public/js/main"
                    :asset-path "/js/main"
-                   :modules    {:main {:init-fn app.client/init ; TODO: update with better domain portion
-                                       :entries [app.client]}}
-                   :devtools   {:after-load app.client/refresh
+                   :modules    {:main {:init-fn justenough.software.client/init
+                                       :entries [justenough.software.client]}}
+                   :devtools   {:after-load justenough.software.client/refresh
                                 :preloads   [com.fulcrologic.fulcro.inspect.preload]}}}}
