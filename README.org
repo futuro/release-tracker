@@ -26,6 +26,25 @@
         the UI) can be customized by me.
       - I can use their initial starter kit or create my own
       - Feel free to be creative in addressing the user stories
+
+   There's also this preamble on:
+   #+begin_quote
+   The output should be a web app client. No backend server is
+   required; you can use LocalStorage (or IndexedDB) or any other
+   libraries for storing data.
+
+   You can clone our starter kit (TypeScript / React)
+   (https://github.com/lumanu/gh-release-monitor) at or create your
+   own project from scratch using any language / framework / libraries
+   you desire.
+
+   We expect you to spend in total a similar amount of time to an
+   onsite interview: half a day to one day.
+
+   Submit your project by sending a link to your repo (or a gzip/zip
+   file containing your entire project) with instructions on how to
+   run it to tom.frost@lumanu.com.
+   #+end_quote
 ** MVP User Stories
 *** TODO Users can add GitHub repos they want to track
     The app keeps track of the added repos -- using
