@@ -1,0 +1,75 @@
+* Justenough Software Release Tracker
+  This repo allows tracking the release status of various public
+  projects on Github, to make keeping up with new releases easier.
+
+  This tiny-project was posed to me by Tom Frost at Lumanu as part of
+  the interview process.
+** Project goal
+   This project has three core goals
+   1. Make a basic assessment of my ability to build modern web apps
+      - take as much time as I need, but don't feel like I need to
+        spend more than a few hours
+      - pull in any third party libraries I want/need
+      - look up any documentation I need
+      - if I've got the time, try to tackle one or more of the
+        extended user stories, but they're optional
+   2. Be somewhat close to a real workflow that I would encounter at
+      Lumanu, or other startups
+      - the exercise is intentionally open ended
+      - try to address all of the MVP user stories, but if I get stuck
+        I can submit a partial working prototype that only addresses
+        some of them
+      - ask for help if I'd like clarification or hints if I get stuck
+   3. Allow me the opportunity to showcase my personal flair and
+      skills beyond the basics.
+      - Everything in the spec beyond the MVP user stories (including
+        the UI) can be customized by me.
+      - I can use their initial starter kit or create my own
+      - Feel free to be creative in addressing the user stories
+** MVP User Stories
+*** TODO Users can add GitHub repos they want to track
+    The app keeps track of the added repos -- using
+    LocalStorage/IndexedDB or similar, no need for a backend -- until
+    the application data is cleared.
+*** TODO No need for formal user or authentication concept at this point
+*** TODO Users can see the latest release data for each repo
+*** TODO Users can mark a release as seen
+*** TODO There's a visual indicator for repositories with new releases
+    New since they were last marked seen
+*** TODO There is a way to reload release data for all repos
+    This one needs some clarification what "reload" means. I /suspect/
+    it's "pull the release data from ghub", but I want to make sure it
+    isn't "clear the _seen_ state".
+** Optional goals past MVP
+*** Release notes/other data we might want to present in a details view
+*** Mobile responsive?
+*** When to load/update data, what loading states should there be
+*** Filter or sort the repo list
+    To easily see which repos have new releases since last we marked
+    them seen.
+*** Additional personal metadata
+    F.e. the ability to mark a release as something to revisit, or as
+    something to update in other projects
+*** Support more data points to mark new releases
+    Some projects don't use GitHub releases, so support some other
+    data points for marking new releases; perhaps commit activity.
+*** Desktop/mobile notifications
+    This seems somewhat vague, so it probably needs a collab session
+    with Tom to sort out what this means.
+
+    Alternatively, it's not vague to someone that's done more frontend
+    work, but it'll still require a collab session with Tom.
+*** Add a backend to this service
+    This is worded as such:
+    #+begin_quote
+    How would you build a real server for this / turn this into a
+    service that would store data beyond the local browser?
+    #+end_quote
+
+    From this, I could see either an RFC-style kind of proposal that
+    talks about the "how" without actually building it, but it might
+    also build it out.
+**** OAuth
+     Personally, I think it'd be neat to sort out OAuth with this, so
+     that we could get access to larger API request limits, as well as
+     private repos, but perhaps that's another goal altogether.
