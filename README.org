@@ -44,6 +44,12 @@
     meaningful anyways. Also, it'll fill in for the requirements
     around having docs on running the project.
 *** No need for formal user or authentication concept at this point
+** Helpful links
+   - [[https://developer.github.com/v3/libraries/][Octokit libraries for working with the GitHub API]]
+   - [[https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#release][GitHub releases API]]
+   - [[https://docs.github.com/en/rest/reference/search][GitHub search API]]
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage][LocalStorage MDN Docs]]
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API][IndexedDB MDN Docs]]
 ** Optional goals past MVP
 *** Release notes/other data we might want to present in a details view
 *** Mobile responsive?
