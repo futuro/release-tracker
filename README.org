@@ -43,7 +43,7 @@
     This wasn't part of the MVP section in the email, but I find it
     meaningful anyways. Also, it'll fill in for the requirements
     around having docs on running the project.
-*** TODO No need for formal user or authentication concept at this point
+*** No need for formal user or authentication concept at this point
 ** Optional goals past MVP
 *** Release notes/other data we might want to present in a details view
 *** Mobile responsive?
