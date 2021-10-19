@@ -31,7 +31,6 @@
     The app keeps track of the added repos -- using
     LocalStorage/IndexedDB or similar, no need for a backend -- until
     the application data is cleared.
-*** TODO No need for formal user or authentication concept at this point
 *** TODO Users can see the latest release data for each repo
 *** TODO Users can mark a release as seen
 *** TODO There's a visual indicator for repositories with new releases
@@ -40,6 +39,11 @@
     This one needs some clarification what "reload" means. I /suspect/
     it's "pull the release data from ghub", but I want to make sure it
     isn't "clear the _seen_ state".
+*** TODO update README with instructions on running the project
+    This wasn't part of the MVP section in the email, but I find it
+    meaningful anyways. Also, it'll fill in for the requirements
+    around having docs on running the project.
+*** TODO No need for formal user or authentication concept at this point
 ** Optional goals past MVP
 *** Release notes/other data we might want to present in a details view
 *** Mobile responsive?
