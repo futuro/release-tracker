@@ -3,6 +3,7 @@
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.dom.events :as evt]
             [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
+            [com.fulcrologic.fulcro.algorithms.merge :as merge]
             [com.fulcrologic.fulcro.algorithms.form-state :as fs]))
 
 (defn field [{:keys [label valid? error-message] :as props}]
@@ -21,6 +22,29 @@
                (assoc m (keyword prefix k) v))
              {}
              m))
+
+(defsc SearchResult [this {:repo/keys [name id]
+                           :as props}]
+  {:query [:repo/name :repo/id]
+   :ident (fn [] [:repo/id (:repo/id props)])}
+  (dom/li
+   (dom/h5 name)))
+
+(def search-result (comp/factory SearchResult))
+
+(defsc SearchResultsList [this {:repo/keys [list] :as props}]
+  {:query [{:repo/list (comp/get-query SearchResult)}]
+   :initial-state (fn [_]
+                    {:repo/list list})
+   :ident (fn () [:component/id :repo.search/results])}
+  (dom/div
+   (dom/h4 "Search Results")
+   (if (not-empty list)
+     (dom/ul
+      (map #(search-result %) list))
+     (dom/div "No results yet"))))
+
+(def search-result-list (comp/factory SearchResultsList))
 
 (defn parse-search-results
   "Given the results from the Octokit library, returns the list of
@@ -63,8 +87,12 @@
   (action [{:keys [state]}]
           (swap! state configure-search-form*)))
 
-(defsc SearchForm [this {:repo/keys [name] :as props}]
-  {:query             [:repo/name fs/form-config-join]
+(defsc SearchForm [this {:repo/keys                  [name]
+                         {list :repo.search/results} :component/id
+                         :as                         props}]
+  {:query             [:repo/name
+                       fs/form-config-join
+                       {:component/id {:repo.search/results (comp/get-query SearchResultsList)}}]
    :form-fields       #{:repo/name}
    :ident             (fn [] repo-search-ident)
    :componentDidMount (fn [this]
@@ -80,6 +108,7 @@
                           :value        (or name "")
                           :autoComplete "off"
                           :onKeyDown    submit!
-                          :onChange     #(m/set-string! this :repo/name :event %)})))))
+                          :onChange     #(m/set-string! this :repo/name :event %)}))
+     (search-result-list))))
 
 (def search-ui (comp/factory SearchForm))
