@@ -27,11 +27,12 @@
   returned repos as EDN, with each key keywordized, and prepended with
   `repo`."
   [results]
-  (let [data (-> results
+  (let [repos (-> results
                  (js->clj :keywordize-keys true)
-                 :data)]
+                 :data
+                 :items)]
     (map #(prepend-keys % "repo")
-         data)))
+         repos)))
 
 (defmutation search-repos! [{:repo/keys [name]}]
   (action [{:keys [state]}]
