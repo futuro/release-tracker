@@ -47,9 +47,9 @@
 (def search-result-list (comp/factory SearchResultsList))
 
 (defn parse-search-results
-  "Given the results from the Octokit library, returns the list of
-  returned repos as EDN, with each key keywordized, and prepended with
-  `repo`."
+  "Given the results of a search using the Octokit library, this returns
+  the results in the same shape as the query for `SearchResultsList`,
+  thus enabling auto-normalization by Fulcro."
   [results]
   (let [repos (-> results
                  (js->clj :keywordize-keys true)
