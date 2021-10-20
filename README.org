@@ -51,6 +51,9 @@
     LocalStorage/IndexedDB or similar, no need for a backend -- until
     the application data is cleared.
 **** TODO repo searching
+     - The actual searching
+     - Displaying the results
+**** TODO a list of repos we're following
 *** TODO Users can see the latest release data for each repo
 *** TODO Users can mark a release as seen
 *** TODO There's a visual indicator for repositories with new releases
