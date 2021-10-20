@@ -42,14 +42,14 @@
             .-search
             (.repos #js {:q name})
             js/Promise.resolve
-            (.then #(swap! state assoc :repos/list (parse-search-results %))))
+            (.then #(swap! state merge/merge-component SearchResultsList (parse-search-results %))))
         (catch js/Object o
           (js/console.log "Search failed with error" o))))))
 
 (declare SearchForm)
 
 (def repo-search-ident
-  [:component/id :repo/search-form])
+  [:component/id :repo.search/form])
 
 (defn configure-search-form*
   [state-map]

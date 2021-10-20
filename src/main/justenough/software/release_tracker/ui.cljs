@@ -5,11 +5,11 @@
             [justenough.software.release-tracker.ui.repo :as repo]))
 
 (defsc Root [this {:github/keys [client user]
-                   {search :repo/search-form} :component/id
+                   {search :repo.search/form} :component/id
                    :as props}]
   {:query [:github/client
            {:github/user (comp/get-query user/User)}
-           {:component/id {:repo/search-form (comp/get-query repo/SearchForm)}}]}
+           {:component/id {:repo.search/form (comp/get-query repo/SearchForm)}}]
   (dom/div
    (dom/div "Root div")
    (user/factory user)
