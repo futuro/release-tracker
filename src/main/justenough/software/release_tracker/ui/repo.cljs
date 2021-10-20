@@ -23,12 +23,14 @@
              {}
              m))
 
-(defsc SearchResult [this {:repo/keys [name id]
+;; Search Results
+
+(defsc SearchResult [this {:repo/keys [full_name id]
                            :as props}]
-  {:query [:repo/name :repo/id]
+  {:query [:repo/full_name :repo/id]
    :ident (fn [] [:repo/id (:repo/id props)])}
   (dom/li
-   (dom/h5 name)))
+   (dom/h5 full_name)))
 
 (def search-result (comp/factory SearchResult {:keyfn :repo/id}))
 
