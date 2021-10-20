@@ -71,7 +71,7 @@
                         (comp/transact! this [(configure-search-form)]))}
   (let [submit!  (fn [evt]
                    (when (or (identical? true evt) (evt/enter-key? evt))
-                     (comp/transact! this [(search-repos! {:name name})])))
+                     (comp/transact! this [(search-repos! {:repo/name name})])))
         checked? (fs/checked? props)]
     (dom/div
      (dom/h3 "Search")
