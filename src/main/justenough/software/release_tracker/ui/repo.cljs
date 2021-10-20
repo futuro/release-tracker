@@ -6,6 +6,8 @@
             [com.fulcrologic.fulcro.algorithms.merge :as merge]
             [com.fulcrologic.fulcro.algorithms.form-state :as fs]))
 
+;; Utils
+
 (defn field [{:keys [label valid? error-message] :as props}]
   (let [input-props (-> props
                         (assoc :name label)
@@ -47,6 +49,8 @@
      (dom/div "No results yet"))))
 
 (def search-result-list (comp/factory SearchResultsList))
+
+;; Search Form
 
 (defn parse-search-results
   "Given the results of a search using the Octokit library, this returns
