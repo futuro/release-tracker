@@ -36,7 +36,7 @@
   {:query [{:repo/list (comp/get-query SearchResult)}]
    :initial-state (fn [_]
                     {:repo/list []})
-   :ident (fn () [:component/id :repo.search/results])}
+   :ident (fn [] [:component/id :repo.search/results])}
   (dom/div
    (dom/h4 "Search Results")
    (if (not-empty list)
