@@ -30,12 +30,12 @@
   (dom/li
    (dom/h5 name)))
 
-(def search-result (comp/factory SearchResult))
+(def search-result (comp/factory SearchResult {:keyfn :repo/id}))
 
 (defsc SearchResultsList [this {:repo/keys [list] :as props}]
   {:query [{:repo/list (comp/get-query SearchResult)}]
    :initial-state (fn [_]
-                    {:repo/list list})
+                    {:repo/list []})
    :ident (fn () [:component/id :repo.search/results])}
   (dom/div
    (dom/h4 "Search Results")
@@ -55,8 +55,11 @@
                  (js->clj :keywordize-keys true)
                  :data
                  :items)]
-    (map #(prepend-keys % "repo")
-         repos)))
+    {:repo/list
+     (->> repos
+          ;; This must return a vector to get free normalization from
+          ;; `merge/merge-component`
+          (mapv #(prepend-keys % "repo")))}))
 
 (defmutation search-repos! [{:repo/keys [name]}]
   (action [{:keys [state]}]
@@ -87,12 +90,12 @@
   (action [{:keys [state]}]
           (swap! state configure-search-form*)))
 
-(defsc SearchForm [this {:repo/keys                  [name]
-                         {list :repo.search/results} :component/id
-                         :as                         props}]
-  {:query             [:repo/name
+(defsc SearchForm [this {{:repo/keys [name]} :repo.search/form
+                         list       :repo.search/results
+                         :as        props}]
+  {:query             [{:repo.search/form [:repo/name]}
                        fs/form-config-join
-                       {:component/id {:repo.search/results (comp/get-query SearchResultsList)}}]
+                       {:repo.search/results (comp/get-query SearchResultsList)}]
    :form-fields       #{:repo/name}
    :ident             (fn [] repo-search-ident)
    :componentDidMount (fn [this]
@@ -109,6 +112,6 @@
                           :autoComplete "off"
                           :onKeyDown    submit!
                           :onChange     #(m/set-string! this :repo/name :event %)}))
-     (search-result-list))))
+     (search-result-list list))))
 
 (def search-ui (comp/factory SearchForm))
