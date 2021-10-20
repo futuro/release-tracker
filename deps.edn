@@ -1,6 +1,7 @@
 {:paths ["src/main" "resources"]
  :deps  {org.clojure/clojure    {:mvn/version "1.10.3"}
-         com.fulcrologic/fulcro {:mvn/version "3.5.6"}}
+         com.fulcrologic/fulcro {:mvn/version "3.5.6"}
+         com.taoensso/timbre    {:mvn/version "5.0.0"}}
 
  :aliases {:dev {:extra-paths ["src/dev"]
                  :extra-deps  {org.clojure/clojurescript {:mvn/version "1.10.879"}
