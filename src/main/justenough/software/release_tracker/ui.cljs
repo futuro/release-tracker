@@ -10,7 +10,6 @@
   {:query [:github/client
            {:github/user (comp/get-query user/User)}
            {:component/id (comp/get-query repo/SearchForm)}]}
-  (dom/div
-   (dom/div "Root div")
+  (dom/div :.ui.container
    (user/factory user)
    (repo/search-ui search)))
