@@ -46,21 +46,21 @@
    run it to tom.frost@lumanu.com.
    #+end_quote
 ** MVP User Stories
-*** TODO Users can add GitHub repos they want to track
+*** DONE Users can add GitHub repos they want to track
     The app keeps track of the added repos -- using
     LocalStorage/IndexedDB or similar, no need for a backend -- until
     the application data is cleared.
-**** TODO repo searching
+**** DONE repo searching
 ***** DONE The actual searching
       This is complete
-***** TODO Displaying the results
+***** DONE Displaying the results
       I've got a barebones display that just shows the name of the
       repo.
 
       This looks pretty ugly atm, so pulling in semantic UI might be
       nice, and also save me any UI tweaking
-**** TODO a list of repos we're following
-**** TODO a way to add from the search results
+**** DONE a list of repos we're following
+**** DONE a way to add from the search results
 *** TODO Users can see the latest release data for each repo
 *** TODO Users can mark a release as seen
 *** TODO There's a visual indicator for repositories with new releases
