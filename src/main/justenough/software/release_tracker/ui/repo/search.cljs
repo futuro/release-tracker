@@ -1,4 +1,4 @@
-(ns justenough.software.release-tracker.ui.repo
+(ns justenough.software.release-tracker.ui.repo.search
   (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.dom.events :as evt]
