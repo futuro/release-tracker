@@ -22,9 +22,16 @@
                      :list/label label
                      :list/repos (comp/get-initial-state TrackedRepo {})})
    :ident (fn [] [:list/id (:list/id props)])}
-  ;; TODO: add a grid to support repo details view
   (dom/div :.ui.segment
-    (dom/div :.ui.cards
-      (map #(tracked-repo %) repos))))
+    (dom/div :.ui.grid
+      (dom/div :.ui.four.wide.column
+        (dom/div :.ui.center.aligned.header
+          "Tracked Repos"
+          (dom/div :.ui.cards
+            (map #(tracked-repo %) repos))))
+      (dom/div :.ui.twelve.wide.column
+        (dom/div
+          (dom/div :.ui.center.aligned.header
+            "Tracked Repo Details"))))))
 
 (def repo-list (comp/factory TrackedRepoList))
