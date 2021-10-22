@@ -10,6 +10,7 @@
 
 ;; Utils
 
+;; TODO: delete this?
 (defn field [{:keys [label valid? error-message] :as props}]
   (let [input-props (-> props
                         (assoc :name label)
