@@ -5,7 +5,8 @@
 (defsc TrackedRepo [this {:repo/keys [full_name id]
                           :as props}]
   {:query [:repo/full_name :repo/id]
-   :ident :repo/id}
+   :ident :repo/id
+   :initial-state (fn [_] [])}
   ;; TODO add the buttons to mark a repo as tracked
   (dom/div :.ui.card
     (dom/div :.content
@@ -13,12 +14,14 @@
 
 (def tracked-repo (comp/factory TrackedRepo {:keyfn :repo/id}))
 
-(defsc TrackedRepoList [this {repos ::tracked-repo-list
+(defsc TrackedRepoList [this {repos :list/repos
                               :as props}]
-  {:query [{::tracked-repo-list (comp/get-query TrackedRepo)}]
-   :initial-state (fn [_]
-                    {::tracked-repo-list []})
-   :ident (fn [] [:component/id ::tracked-repo-list])}
+  {:query [:list/id :list/label {:list/repos (comp/get-query TrackedRepo)}]
+   :initial-state (fn [{:list/keys [id label]}]
+                    {:list/id id
+                     :list/label label
+                     :list/repos (comp/get-initial-state TrackedRepo {})})
+   :ident (fn [] [:list/id (:list/id props)])}
   ;; TODO: add a grid to support repo details view
   (dom/div :.ui.segment
     (dom/div :.ui.cards

@@ -106,8 +106,10 @@
                        {:repo.search/results (comp/get-query SearchResultsList)}]
    :form-fields       #{:repo/name}
    :ident             (fn [] repo-search-ident)
-   :componentDidMount (fn [this]
-                        (comp/transact! this [(configure-search-form)]))}
+   :initial-state (fn [_]
+                    (fs/add-form-config SearchForm
+                                        {:repo/name ""
+                                         :repo.search/results (comp/get-initial-state SearchResultsList {})}))}
   (let [submit!  (fn [evt]
                    (when (or (identical? true evt) (evt/enter-key? evt))
                      (comp/transact! this [(search-repos! {:repo/name name})])))

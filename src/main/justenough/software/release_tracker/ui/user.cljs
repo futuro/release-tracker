@@ -39,7 +39,8 @@
 
 (defsc User [this {:user/keys [name id] :as props}]
   {:query [:user/name :user/id]
-   :ident (fn [] [:user/id (:user/id props)])}
+   :ident (fn [] [:user/id (:user/id props)])
+   :initial-state (fn [_] [])}
   (dom/div
    (dom/h3 "User info")
    (if (nil? name)
