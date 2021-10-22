@@ -18,7 +18,7 @@
                                                             {:list/id ::tracked/repo-list
                                                              :list/label "Tracked Repos"})
                      :github/client nil
-                     :github/user (comp/get-initial-state user/User {})
+                     :github/user {}
                      :component/id (comp/get-initial-state search/SearchForm {})})}
   (dom/div :.ui.container
     (user/factory user)
