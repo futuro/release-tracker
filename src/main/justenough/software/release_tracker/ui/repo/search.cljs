@@ -74,7 +74,7 @@
           (mapv #(prepend-keys % "repo")))}))
 
 (defmutation search-repos! [{:repo/keys [name]}]
-  (action [{:keys [state]}]
+  (action [{:keys [state app]}]
     (let [client (:github/client @state)]
       (try
         (-> client
@@ -82,7 +82,7 @@
             .-search
             (.repos #js {:q name})
             js/Promise.resolve
-            (.then #(swap! state merge/merge-component SearchResultsList (parse-search-results %))))
+            (.then #(merge/merge-component! app SearchResultsList (parse-search-results %))))
         (catch js/Object o
           (log/error "Search failed with error" o))))))
 
