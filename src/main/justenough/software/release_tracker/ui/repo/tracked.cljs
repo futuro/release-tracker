@@ -6,7 +6,7 @@
                           :as props}]
   {:query [:repo/full_name :repo/id]
    :ident :repo/id
-   :initial-state (fn [_] [])}
+   :initial-state (fn [_] {})}
   ;; TODO add the buttons to mark a repo as tracked
   (dom/div :.ui.card
     (dom/div :.content
@@ -20,7 +20,7 @@
    :initial-state (fn [{:list/keys [id label]}]
                     {:list/id id
                      :list/label label
-                     :list/repos (comp/get-initial-state TrackedRepo {})})
+                     :list/repos []})
    :ident (fn [] [:list/id (:list/id props)])}
   (dom/div :.ui.segment
     (dom/div :.ui.grid
