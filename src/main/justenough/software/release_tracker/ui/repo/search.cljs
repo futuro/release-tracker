@@ -98,6 +98,7 @@
   (action [{:keys [state]}]
           (swap! state configure-search-form*)))
 
+;; TODO turn this into a parent Search component, which contains SearchForm and SearchResultsList
 (defsc SearchForm [this {{:repo/keys [name]} :repo.search/form
                          list       :repo.search/results
                          :as        props}]
