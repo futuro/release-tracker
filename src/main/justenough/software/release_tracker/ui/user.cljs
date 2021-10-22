@@ -2,7 +2,8 @@
   (:require [com.fulcrologic.fulcro.application :as app]
             [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.dom :as dom]
-            [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]))
+            [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
+            [com.fulcrologic.fulcro.algorithms.merge :as merge]))
 
 (defn get-user
   [client callback]
@@ -12,6 +13,8 @@
       (.getAuthenticated)
       js/Promise.resolve
       (.then callback)))
+
+(declare User)
 
 (defmutation fetch-user
   "Mutation: fetch the currently auth'd user's info"
@@ -31,7 +34,8 @@
                                                        (assoc m (keyword "user" k) v))
                                                      {}
                                                      (:data (js->clj % :keywordize-keys true)))]
-                            (swap! state assoc :github/user user-data)
+                            (swap! state merge/merge-component User user-data
+                                   :replace [:github/user])
                             (js/console.log "Fetched user")))
         (catch js/Object o
           (js/console.log "failed to fetch user with error" o)))
