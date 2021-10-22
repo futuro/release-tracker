@@ -1,16 +1,30 @@
 (ns justenough.software.release-tracker.ui.repo.tracked
   (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
-            [com.fulcrologic.fulcro.dom :as dom]))
+            [com.fulcrologic.fulcro.algorithms.data-targeting :as targeting]
+            [com.fulcrologic.fulcro.dom :as dom]
+            [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
+            [com.fulcrologic.fulcro.algorithms.merge :as merge]
+            [taoensso.timbre :as log]))
+
+(declare TrackedRepo)
+
+(defmutation track-repo
+  [{:keys [id]}]
+  (action [{:keys [state]}]
+    (let [ident (-> @state
+                    :tracked-repos
+                    (into [:list/repos]))]
+      (swap! state targeting/integrate-ident* [:repo/id id]
+             :append ident))))
 
 (defsc TrackedRepo [this {:repo/keys [full_name id]
                           :as props}]
   {:query [:repo/full_name :repo/id]
    :ident :repo/id
    :initial-state (fn [_] {})}
-  ;; TODO add the buttons to mark a repo as tracked
   (dom/div :.ui.card
     (dom/div :.content
-      (dom/div :.header full_name))))
+      (dom/h2 :.header full_name))))
 
 (def tracked-repo (comp/factory TrackedRepo {:keyfn :repo/id}))
 

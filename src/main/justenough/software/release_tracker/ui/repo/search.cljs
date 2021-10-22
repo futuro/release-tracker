@@ -37,8 +37,9 @@
     (dom/div :.content
       (dom/div :.header full_name))
     (dom/div :.extra.content
-      ;; TODO: make this button add the repo to the list of tracked repos
-      (dom/button :.fluid.ui.positive.basic.button "Track"))))
+      (dom/button :.fluid.ui.positive.basic.button
+                  {:onClick #(comp/transact! this [(tracked/track-repo {:id id})])}
+                  "Track"))))
 
 (def search-result (comp/factory SearchResult {:keyfn :repo/id}))
 
