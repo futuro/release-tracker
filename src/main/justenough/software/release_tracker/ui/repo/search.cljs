@@ -4,7 +4,9 @@
             [com.fulcrologic.fulcro.dom.events :as evt]
             [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
             [com.fulcrologic.fulcro.algorithms.merge :as merge]
-            [com.fulcrologic.fulcro.algorithms.form-state :as fs]))
+            [com.fulcrologic.fulcro.algorithms.form-state :as fs]
+            [justenough.software.release-tracker.ui.repo.tracked :as tracked]
+            [taoensso.timbre :as log]))
 
 ;; Utils
 
@@ -80,7 +82,7 @@
             js/Promise.resolve
             (.then #(swap! state merge/merge-component SearchResultsList (parse-search-results %))))
         (catch js/Object o
-          (js/console.log "Search failed with error" o))))))
+          (log/error "Search failed with error" o))))))
 
 (declare SearchForm)
 
