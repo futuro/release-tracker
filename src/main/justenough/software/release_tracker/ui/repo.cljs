@@ -31,8 +31,11 @@
                            :as props}]
   {:query [:repo/full_name :repo/id]
    :ident (fn [] [:repo/id (:repo/id props)])}
-  (dom/li
-   (dom/h5 full_name)))
+  (dom/div :.ui.card
+    (dom/div :.content
+      (dom/div :.header full_name))
+    (dom/div :.extra.content
+      (dom/button :.fluid.ui.positive.basic.button "Add"))))
 
 (def search-result (comp/factory SearchResult {:keyfn :repo/id}))
 
@@ -41,12 +44,10 @@
    :initial-state (fn [_]
                     {:repo/list []})
    :ident (fn [] [:component/id :repo.search/results])}
-  (dom/div
-   (dom/h4 "Search Results")
-   (if (not-empty list)
-     (dom/ul
-      (map #(search-result %) list))
-     (dom/div "No results yet"))))
+  (if (not-empty list)
+    (dom/div :.ui.cards
+      (map #(search-result %) (take 4 list)))
+    (dom/div "No results yet")))
 
 (def search-result-list (comp/factory SearchResultsList))
 
@@ -110,14 +111,17 @@
                    (when (or (identical? true evt) (evt/enter-key? evt))
                      (comp/transact! this [(search-repos! {:repo/name name})])))
         checked? (fs/checked? props)]
-    (dom/div
-     (dom/h3 "Search")
-     (dom/div :.ui.form {:classes [(when checked? "error")]}
-              (dom/input {:label        "Repo name"
-                          :value        (or name "")
-                          :autoComplete "off"
-                          :onKeyDown    submit!
-                          :onChange     #(m/set-string! this :repo/name :event %)}))
-     (search-result-list list))))
+    (dom/div :.ui.segment
+      (dom/h3 "Search for repos")
+      (dom/div :.ui.grid
+        (dom/div :.ui.four.wide.column
+          (dom/div :.ui.fluid.input
+            (dom/input {:placeholder "Repo name"
+                        :value        (or name "")
+                        :autoComplete "off"
+                        :onKeyDown    submit!
+                        :onChange     #(m/set-string! this :repo/name :event %)})))
+        (dom/div :.ui.twelve.wide.column
+          (search-result-list list))))))
 
 (def search-ui (comp/factory SearchForm))
