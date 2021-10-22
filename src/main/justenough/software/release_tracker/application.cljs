@@ -1,5 +1,5 @@
 (ns justenough.software.release-tracker.application
   (:require [com.fulcrologic.fulcro.application :as app]))
 
-(defonce app
+(defonce tracker-app
   (app/fulcro-app))
