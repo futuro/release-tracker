@@ -7,4 +7,5 @@
                                        :entries [justenough.software.release-tracker.client]}}
                    :devtools   {:after-load justenough.software.release-tracker.client/refresh
                                 :preloads   [com.fulcrologic.fulcro.inspect.dom-picker-preload
-                                             com.fulcrologic.fulcro.inspect.preload]}}}}
+                                             com.fulcrologic.fulcro.inspect.preload
+                                             justenough.software.dev.preload]}}}}
