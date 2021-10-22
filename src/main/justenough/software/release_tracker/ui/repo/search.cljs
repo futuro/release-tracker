@@ -13,10 +13,10 @@
                         (assoc :name label)
                         (dissoc :label :valid? :error-message))]
     (dom/div :.ui.field
-             (dom/label {:htmlFor label} label)
-             (dom/input input-props)
-             (dom/div :.ui.error.message {:classes [(when valid? "hidden")]}
-                      error-message))))
+      (dom/label {:htmlFor label} label)
+      (dom/input input-props)
+      (dom/div :.ui.error.message {:classes [(when valid? "hidden")]}
+        error-message))))
 
 (defn prepend-keys
   [m prefix]
