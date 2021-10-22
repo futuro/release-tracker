@@ -116,16 +116,18 @@
                      (comp/transact! this [(search-repos! {:repo/name name})])))
         checked? (fs/checked? props)]
     (dom/div :.ui.segment
-      (dom/h3 "Search for repos")
+      (dom/div :.ui.center.aligned.header "Search for repos")
       (dom/div :.ui.grid
-        (dom/div :.ui.four.wide.column
-          (dom/div :.ui.fluid.input
-            (dom/input {:placeholder "Repo name"
-                        :value        (or name "")
-                        :autoComplete "off"
-                        :onKeyDown    submit!
-                        :onChange     #(m/set-string! this :repo/name :event %)})))
-        (dom/div :.ui.twelve.wide.column
-          (search-result-list list))))))
+        (dom/div :.ui.row
+          (dom/div :.ui.center.aligned.column
+            (dom/div :.ui.input
+              (dom/input {:placeholder "Repo name"
+                          :value        (or name "")
+                          :autoComplete "off"
+                          :onKeyDown    submit!
+                          :onChange     #(m/set-string! this :repo/name :event %)}))))
+        (dom/div :.ui.row
+          (dom/div :.ui.column
+            (search-result-list list)))))))
 
 (def search-ui (comp/factory SearchForm))
