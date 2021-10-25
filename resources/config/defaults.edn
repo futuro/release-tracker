@@ -1,0 +1,20 @@
+{:org.httpkit.server/config      {:port 3000}
+
+ :taoensso.timbre/logging-config {:min-level :info}
+
+ ;; I've elided the security middleware to keep the scope down for
+ ;; this exercise, but should this ever go to production, or be used
+ ;; more extensively on laptops, the security defaults should be set
+ ;; up.
+ :ring.middleware/defaults-config
+                                 {:params    {:keywordize true
+                                              :multipart  true
+                                              :nested     true
+                                              :urlencoded true}
+                                  :cookies   true
+                                  :responses {:absolute-redirects     true
+                                              :content-types          true
+                                              :default-charset        "utf-8"
+                                              :not-modified-responses true}
+                                  :static    {:resources "public"}
+                                  :session   true}}
