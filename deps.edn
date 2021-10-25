@@ -4,6 +4,7 @@
          com.taoensso/timbre    {:mvn/version "5.0.0"}
          http-kit/http-kit      {:mvn/version "2.5.0"}
          mount/mount            {:mvn/version "0.1.16"}
+         aero/aero              {:mvn/version "1.1.6"}
 
          ring/ring-core     {:mvn/version "1.8.1"}
          ring/ring-defaults {:mvn/version "0.3.2"}}

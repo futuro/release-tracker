@@ -1,6 +1,11 @@
 {:org.httpkit.server/config      {:port 3000}
 
- :taoensso.timbre/logging-config {:min-level :info}
+ :taoensso.timbre/logging-config {:min-level
+                                  #profile {:default :info
+                                            :dev :debug
+                                            :prod :info}}
+
+ :secrets #include "secrets.edn"
 
  ;; I've elided the security middleware to keep the scope down for
  ;; this exercise, but should this ever go to production, or be used
