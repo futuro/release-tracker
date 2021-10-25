@@ -4,22 +4,10 @@
             [com.fulcrologic.fulcro.dom.events :as evt]
             [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
             [com.fulcrologic.fulcro.algorithms.merge :as merge]
-            [com.fulcrologic.fulcro.algorithms.form-state :as fs]
             [justenough.software.release-tracker.ui.repo.tracked :as tracked]
             [taoensso.timbre :as log]))
 
 ;; Utils
-
-;; TODO: delete this?
-(defn field [{:keys [label valid? error-message] :as props}]
-  (let [input-props (-> props
-                        (assoc :name label)
-                        (dissoc :label :valid? :error-message))]
-    (dom/div :.ui.field
-      (dom/label {:htmlFor label} label)
-      (dom/input input-props)
-      (dom/div :.ui.error.message {:classes [(when valid? "hidden")]}
-        error-message))))
 
 (defn prepend-keys
   [m prefix]
@@ -89,39 +77,22 @@
         (catch js/Object o
           (log/error "Search failed with error" o))))))
 
-(declare SearchForm)
-
 (def repo-search-ident
   [:component/id :repo.search/form])
-
-(defn configure-search-form*
-  [state-map]
-  (-> state-map
-      (assoc-in repo-search-ident
-                {:repo/name ""})
-      (fs/add-form-config* SearchForm repo-search-ident)))
-
-(defmutation configure-search-form [_]
-  (action [{:keys [state]}]
-          (swap! state configure-search-form*)))
 
 ;; TODO turn this into a parent Search component, which contains SearchForm and SearchResultsList
 (defsc SearchForm [this {{:repo/keys [name]} :repo.search/form
                          list       :repo.search/results
                          :as        props}]
   {:query             [{:repo.search/form [:repo/name]}
-                       fs/form-config-join
                        {:repo.search/results (comp/get-query SearchResultsList)}]
-   :form-fields       #{:repo/name}
    :ident             (fn [] repo-search-ident)
    :initial-state (fn [_]
-                    (fs/add-form-config SearchForm
-                                        {:repo/name ""
-                                         :repo.search/results (comp/get-initial-state SearchResultsList {})}))}
+                    {:repo/name ""
+                     :repo.search/results (comp/get-initial-state SearchResultsList {})})}
   (let [submit!  (fn [evt]
                    (when (or (identical? true evt) (evt/enter-key? evt))
-                     (comp/transact! this [(search-repos! {:repo/name name})])))
-        checked? (fs/checked? props)]
+                     (comp/transact! this [(search-repos! {:repo/name name})])))]
     (dom/div :.ui.segment
       (dom/div :.ui.center.aligned.header "Search for repos")
       (dom/div :.ui.grid
