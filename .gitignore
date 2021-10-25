@@ -4,3 +4,4 @@
 /resources/public/js
 /src/main/justenough/software/secrets.cljs
 /src/main/justenough/software/release_tracker/secrets.cljs
+**/secrets.edn
