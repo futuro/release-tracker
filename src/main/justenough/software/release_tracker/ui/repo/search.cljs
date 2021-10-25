@@ -63,8 +63,10 @@
           (mapv #(prepend-keys % "repo")))}))
 
 (defmutation search-repos! [{:repo/keys [name]}]
-  (action [{:keys [state app]}]
+  (action [{:keys [state app component]}]
     (let [client (:github/client @state)]
+      (swap! state merge/merge-component SearchResultsList {:repo/list []} :remove-missing? true)
+      (swap! state assoc :repo.search.result/id {})
       (try
         (-> client
             .-rest
