@@ -76,6 +76,7 @@
             ;; TODO this will grow the list unbounded, and we should
             ;; probably figure out how to clear about the list of
             ;; search results with every new search.
+            ;; (.then (js/Promise.resolve (.. ghub -rest -repos (listReleases #js{:owner "facebook" :repo "react"}))) #(js/console.log %))
             (.then #(merge/merge-component! app SearchResultsList (parse-search-results %))))
         (catch js/Object o
           (log/error "Search failed with error" o))))))
