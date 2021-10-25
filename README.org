@@ -61,7 +61,7 @@
       nice, and also save me any UI tweaking
 **** DONE a list of repos we're following
 **** DONE a way to add from the search results
-*** TODO Users can see the latest release data for each repo
+*** TODO Users can see the latest release date for each repo
 *** TODO Users can mark a release as seen
 *** TODO There's a visual indicator for repositories with new releases
     New since they were last marked seen
