@@ -21,13 +21,14 @@
 (defsc SearchResult [this {:repo/keys [full_name id]
                            :as props}]
   {:query [:repo/full_name :repo/id]
-   :ident (fn [] [:repo/id (:repo/id props)])}
+   :ident (fn [] [:repo.search.result/id (:repo/id props)])}
   (dom/div :.ui.card
     (dom/div :.content
       (dom/div :.header full_name))
     (dom/div :.extra.content
       (dom/button :.fluid.ui.positive.basic.button
-                  {:onClick #(comp/transact! this [(tracked/track-repo {:id id})])}
+                  {:onClick #(comp/transact! this [(tracked/track-repo
+                                                    {:ident (comp/get-ident this)})])}
                   "Track"))))
 
 (def search-result (comp/factory SearchResult {:keyfn :repo/id}))

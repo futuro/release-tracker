@@ -9,14 +9,16 @@
 (declare TrackedRepo)
 
 (defmutation track-repo
-  [{:keys [id]}]
+  [{:keys [ident]}]
   (action [{:keys [state]}]
-    (let [ident (-> @state
-                    :tracked-repos
-                    (into [:list/repos]))]
-      (swap! state targeting/integrate-ident* [:repo/id id]
-             :append ident))))
+    (let [repo (get-in @state ident)]
+      (swap! state merge/merge-component TrackedRepo
+             repo
+             :append [:list/id ::repo-list :list/repos]))))
 
+;; TODO: add a remote that can query GitHub rest API directly, and
+;; then we can use that to automatically fetch releases and tags and
+;; things from the URLs in the repo object map
 (defsc TrackedRepo [this {:repo/keys [full_name id]
                           :as props}]
   {:query [:repo/full_name :repo/id]
