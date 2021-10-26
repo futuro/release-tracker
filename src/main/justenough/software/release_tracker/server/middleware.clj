@@ -8,6 +8,7 @@
             [com.wsscode.pathom.connect.graphql2 :as pg2]
             [mount.core :refer [defstate]]
             [justenough.software.release-tracker.config :as cfg]
+            [justenough.software.release-tracker.server.repo :as repo]
             [ring.middleware.defaults :refer [wrap-defaults]]
             [ring.util.response :refer [response file-response resource-response]]
             [ring.util.response :as resp]))
@@ -20,21 +21,19 @@
 
   ;; TODO
   (GET "/repo" []
-    (resp/response "All tracked repos\n"))
+    (resp/response
+     (repo/all-repos)))
 
   (context "/repo/:user/:repo" [user repo]
     (GET "/" []
       (resp/response
-       (format "You asked for details on repo %s/%s\n"
-               user repo)))
+       (repo/info user repo)))
     (POST "/track" []
       (resp/response
-       (format "You asked me to track repo %s/%s, but I haven't yet\n"
-               user repo)))
+       (repo/track user repo)))
     (POST "/seen" []
       (resp/response
-       (format "You asked me to mark the repo %s/%s as seen\n"
-               user repo))))
+       (repo/seen user repo))))
 
   (route/not-found "Nothing to see here."))
 
