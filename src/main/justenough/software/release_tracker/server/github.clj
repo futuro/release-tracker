@@ -7,10 +7,25 @@
             [clojure.string :as str]
             [jsonista.core :as json]))
 
-(def graphql-uri "https://api.github.com/graphql")
-
 (defstate github-secret
   :start (get-in cfg/config [:secrets :github/auth :user/token]))
+
+;;; REST API
+
+(def base-rest-uri "https://api.github.com")
+
+(defn fetch-repo
+  [{:keys [user repo] :as cfg}]
+  (let [rest-uri (format "%s/repos/%s/%s" base-rest-uri user repo)
+        response (http/get rest-uri
+                           {:oauth-token github-secret
+                            :accept :application/vnd.github.v3+json})]
+    (-> response :body
+        (json/read-value json/keyword-keys-object-mapper))))
+
+;;; GraphQL Experiments
+
+(def graphql-uri "https://api.github.com/graphql")
 
 (defn eql->jsonquery
   [eql]

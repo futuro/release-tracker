@@ -1,5 +1,6 @@
 (ns justenough.software.release-tracker.server.repo
   (:require [justenough.software.release-tracker.server.database :as db]
+            [justenough.software.release-tracker.server.github :as ghub]
             [asami.core :as d]))
 
 (defn all-repos
@@ -31,8 +32,9 @@
 
 (defn track
   [user repo]
-  (format "You asked me to track repo %s/%s, but I haven't yet\n"
-          user repo))
+  ;; TODO  sort out the rest of what this requires to work
+  (d/transact db/connection
+              {:tx-data [(ghub/fetch-repo {:user user :repo repo})]}))
 
 (defn seen
   [user repo]
