@@ -22,8 +22,10 @@
   to recompile, and then use `start` once things are good."
   []
   (stop)
-  (tools-ns/refresh :after 'development/start))
+  (tools-ns/refresh :after 'justenough.software.dev.user/start))
 
 (comment
   (start)
-  (stop))
+  (stop)
+  (restart)
+  )
