@@ -5,6 +5,8 @@
                                             :dev :debug
                                             :prod :info}}
 
+ :db {:name "release-tracker-db"}
+
  :secrets #include "secrets.edn"
 
  ;; I've elided the security middleware to keep the scope down for
