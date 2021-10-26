@@ -14,8 +14,7 @@
                configuration    (-> "config/default.edn"
                                     io/resource
                                     (aero/read-config
-                                     {:profile env
-                                      :resolver aero/resource-resolver}))]
+                                     {:profile env}))]
            (log/info "Loaded config")
            (configure-logging! configuration)
            configuration))
