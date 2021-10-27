@@ -2,7 +2,8 @@
   (:require [justenough.software.release-tracker.server.database :as db]
             [justenough.software.release-tracker.server.github :as ghub]
             [asami.core :as d]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [taoensso.timbre :as log]))
 
 (defn all-repos
   []
@@ -36,10 +37,16 @@
 (defn track
   [user repo]
   ;; TODO  sort out the rest of what this requires to work
-  (let [repo-data (ghub/fetch-repo {:user user :repo repo})
-        tx-result (d/transact db/connection
-                              {:tx-data [repo-data]})]
-    "Repo tracked.\n"))
+  (try
+    (let [repo-data (ghub/fetch-repo {:user user :repo repo})
+         tx-result (d/transact db/connection
+                               {:tx-data [repo-data]})]
+      "Repo tracked.\n")
+    (catch Exception e
+      (log/warnf "Caught exception while trying to track repo %s/%s, %s"
+                 user repo e)
+      (format "Something went wrong while trying to track repo \"%s/%s\", double check this repo exists, and check the server logs.\n"
+              user repo))))
 
 (defn seen
   [user repo]
