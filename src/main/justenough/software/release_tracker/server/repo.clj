@@ -39,8 +39,8 @@
   ;; TODO  sort out the rest of what this requires to work
   (try
     (let [repo-data (ghub/fetch-repo {:user user :repo repo})
-         tx-result (d/transact db/connection
-                               {:tx-data [repo-data]})]
+          tx-result (d/transact db/connection
+                                {:tx-data [repo-data]})]
       "Repo tracked.\n")
     (catch Exception e
       (log/warnf "Caught exception while trying to track repo %s/%s, %s"
