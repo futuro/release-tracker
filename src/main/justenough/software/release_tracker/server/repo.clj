@@ -48,6 +48,14 @@
   [{:keys [user repo] :as opts}]
   (try
     (let [repo-data (ghub/fetch-repo opts)
+          ;; TODO introduce either :db/ident or a plain :id key to
+          ;; allow for upserts
+          ;;
+          ;; TODO update the keys to have the replacement annotation
+          ;; -- a single quote mark at the end -- to enable
+          ;; replacement of existing data, which, while brittle,
+          ;; should be sufficient for this exercise. Alternatively,
+          ;; query the DB for the repo before fetching and tracking it
           tx-result (d/transact db/connection
                                 {:tx-data [repo-data]})]
       "Repo tracked.\n")
