@@ -1,15 +1,18 @@
 (ns justenough.software.release-tracker.server.repo
   (:require [justenough.software.release-tracker.server.database :as db]
             [justenough.software.release-tracker.server.github :as ghub]
-            [asami.core :as d]))
+            [asami.core :as d]
+            [clojure.string :as str]))
 
 (defn all-repos
   []
   (let [db (d/db db/connection)]
     (try
-      (d/q '[:find ?repo-name
-             :where [_ :repo/name ?repo-name]]
-           db)
+      ;; TODO: probably this should have some different formatting.
+      (str/join " "
+             (d/q '[:find [?repo-name ...]
+                    :where [_ :github.repo/name ?repo-name]]
+                  db))
       (catch NullPointerException npe
         ;; N.B. if you attempt to query against an attribute that
         ;; doesn't exist in the DB Asami will throw an NPE. There are
