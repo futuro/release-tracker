@@ -1,5 +1,6 @@
 (ns justenough.software.release-tracker.server.github
   (:require [justenough.software.release-tracker.config :as cfg]
+            [justenough.software.release-tracker.util :as util]
             [clj-http.client :as http]
             [com.wsscode.pathom.connect.graphql2 :as pg2]
             [com.wsscode.pathom.graphql :as pg]
@@ -20,8 +21,10 @@
         response (http/get rest-uri
                            {:oauth-token github-secret
                             :accept :application/vnd.github.v3+json})]
-    (-> response :body
-        (json/read-value json/keyword-keys-object-mapper))))
+    (-> response
+        :body
+        (json/read-value json/keyword-keys-object-mapper)
+        (util/namespace-keys "github.repo"))))
 
 ;;; GraphQL Experiments
 
