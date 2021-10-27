@@ -36,7 +36,6 @@
 
 (defn track
   [user repo]
-  ;; TODO  sort out the rest of what this requires to work
   (try
     (let [repo-data (ghub/fetch-repo {:user user :repo repo})
           tx-result (d/transact db/connection
