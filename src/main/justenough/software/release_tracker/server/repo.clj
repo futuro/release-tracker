@@ -33,8 +33,10 @@
 (defn track
   [user repo]
   ;; TODO  sort out the rest of what this requires to work
-  (d/transact db/connection
-              {:tx-data [(ghub/fetch-repo {:user user :repo repo})]}))
+  (let [repo-data (ghub/fetch-repo {:user user :repo repo})
+        tx-result (d/transact db/connection
+                              {:tx-data [repo-data]})]
+    "Repo tracked.\n"))
 
 (defn seen
   [user repo]
