@@ -22,9 +22,8 @@
 (defn fetch-repo
   [{:keys [user repo] :as cfg}]
   (let [rest-uri (format "%s/repos/%s/%s" base-rest-uri user repo)
-        response (http/get rest-uri
-                           {:oauth-token github-secret
-                            :accept :application/vnd.github.v3+json})]
+        response (http/get rest-uri base-req-options)]
+    ;; TODO: handle http failures, like asking for a non-existent repo
     (-> response
         :body
         (json/read-value json/keyword-keys-object-mapper)
