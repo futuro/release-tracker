@@ -30,14 +30,14 @@
         "No repos currently tracked.\n"))))
 
 (defn info
-  [user repo]
+  [{:keys [user repo]}]
   (format "You asked for details on repo %s/%s\n"
           user repo))
 
 (defn track
-  [user repo]
+  [{:keys [user repo] :as opts}]
   (try
-    (let [repo-data (ghub/fetch-repo {:user user :repo repo})
+    (let [repo-data (ghub/fetch-repo opts)
           tx-result (d/transact db/connection
                                 {:tx-data [repo-data]})]
       "Repo tracked.\n")
@@ -48,6 +48,6 @@
               user repo))))
 
 (defn seen
-  [user repo]
+  [{:keys [user repo]}]
   (format "You asked me to mark the repo %s/%s as seen\n"
           user repo))

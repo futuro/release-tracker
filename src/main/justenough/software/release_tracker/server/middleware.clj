@@ -27,13 +27,13 @@
   (context "/repo/:user/:repo" [user repo]
     (GET "/" []
       (resp/response
-       (repo/info user repo)))
+       (repo/info {:user user :repo repo})))
     (POST "/track" []
       (resp/response
-       (repo/track user repo)))
+       (repo/track {:user user :repo repo})))
     (POST "/seen" []
       (resp/response
-       (repo/seen user repo))))
+       (repo/seen {:user user :repo repo}))))
 
   (route/not-found "Nothing to see here."))
 
