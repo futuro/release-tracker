@@ -41,6 +41,26 @@
       (log/warn "Trying to get info for " opts " threw the following error" t)
       (format "No info available for repo %s" (full-name opts)))))
 
+(defn assoc-backtracking-key
+  [opts m]
+  (assoc m :github.repo/_releases [:github.repo/full_name (full-name opts)]))
+
+(defn add-repo-releases
+  [opts]
+  (if-not (repo-exists? opts)
+    "Track the repo before adding releases.\n"
+    (try
+      (let [tx-result (->> opts
+                           ghub/fetch-releases
+                           (map drop-nil-vals)
+                           (map #(assoc-backtracking-key opts %))
+                           (d/transact! db/connection))]
+        tx-result)
+      (catch Throwable t
+        (log/error "Error while adding repo releases" t)
+        (format "Something went wrong while trying to add releases for repo %s"
+                (full-name opts))))))
+
 (defn track
   [{:keys [user repo] :as opts}]
   (if (repo-exists? opts)
