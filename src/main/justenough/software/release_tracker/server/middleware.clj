@@ -14,12 +14,6 @@
             [ring.util.response :as resp]))
 
 (defroutes routes
-  ;; N.B. this route is intended, though not functional, to handle
-  ;; Fulcro requests from the frontend
-  (PUT "/experiment/api" {:keys [transit-params]}
-    (fsa/handle-api-request transit-params ))
-
-  ;; TODO
   (GET "/repo" []
     (resp/response
      (repo/all-repos)))
