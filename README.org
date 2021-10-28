@@ -65,7 +65,7 @@
 *** DONE Users can mark a release as seen
 *** TODO There's a visual indicator for repositories with new releases
     New since they were last marked seen
-*** TODO There is a way to reload release data for all repos
+*** DONE There is a way to reload release data for all repos
     This one needs some clarification what "reload" means. I /suspect/
     it's "pull the release data from ghub", but I want to make sure it
     isn't "clear the _seen_ state".

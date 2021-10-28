@@ -31,6 +31,11 @@
     (POST "/track" []
       (resp/response
        (repo/track {:user user :repo repo})))
+    (POST "/update" []
+      (let [res (repo/add-repo-releases {:user user :repo repo})]
+        (if (string? res)
+          (-> res resp/response (resp/status 500))
+          (resp/response "Successfully updated repo releases.\n"))))
     (POST "/seen" []
       (resp/response
        (repo/seen {:user user :repo repo}))))
