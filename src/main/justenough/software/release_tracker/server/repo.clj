@@ -1,7 +1,7 @@
 (ns justenough.software.release-tracker.server.repo
   (:require [justenough.software.release-tracker.server.database :as db]
             [justenough.software.release-tracker.server.github :as ghub]
-            [asami.core :as d]
+            [datascript.core :as d]
             [clojure.string :as str]
             [taoensso.timbre :as log]))
 

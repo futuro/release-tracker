@@ -12,7 +12,7 @@
          ring/ring-core     {:mvn/version "1.8.1"}
          ring/ring-defaults {:mvn/version "0.3.2"}
          compojure/compojure {:mvn/version "1.6.2"}
-         org.clojars.quoll/asami {:mvn/version "2.2.2"}}
+         datascript/datascript {:mvn/version "1.2.8"}}
 
  :aliases {:dev {:extra-paths ["src/dev"]
                  :extra-deps  {org.clojure/clojurescript   {:mvn/version "1.10.879"}
