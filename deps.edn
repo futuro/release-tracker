@@ -18,4 +18,5 @@
                  :extra-deps  {org.clojure/clojurescript   {:mvn/version "1.10.879"}
                                thheller/shadow-cljs        {:mvn/version "2.15.12"}
                                binaryage/devtools          {:mvn/version "1.0.4"}
-                               org.clojure/tools.namespace {:mvn/version "1.0.0"}}}}}
+                               org.clojure/tools.namespace {:mvn/version "1.0.0"}}}
+           :server {:main-opts ["-m" "justenough.software.release-tracker.server"]}}}

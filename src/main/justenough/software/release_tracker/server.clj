@@ -11,3 +11,7 @@
     (log/info "Starting HTTP server with config " cfg)
     (http-kit/run-server middleware/middleware cfg))
   :stop (http-server))
+
+(defn -main
+  [& args]
+  (mount/start))
