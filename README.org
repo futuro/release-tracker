@@ -1,6 +1,48 @@
 * Justenough Software Release Tracker
   This repo allows tracking the release status of various public
   projects on Github, to make keeping up with new releases easier.
+** Project Goal
+   The original impetus for this project was as a take home exercise
+   for a job interview, focused around tracking OSS releases.
+
+   Building on this original impetus, I wanted to try out a bundle of
+   new tech I've been curious about for a while now, namely:
+   - Fulcro
+   - Pathom
+   - GraphQL
+   - And then a graphdb with datalog support, starting with Asami and
+     then switching to Datascript
+** Short project history
+   Since this was a time-boxed exercise, one might suggest not using
+   almost all totally new technology, but I couldn't resist the chance
+   to give some new things a try and see how much I could get done
+   with them.
+
+   I fleshed out the very beginnings of a UI with Fulcro; spent a fair
+   amount of time learning both Pathom and GraphQL -- in the hopes that I
+   could get automatic query resolution between my Fulcro components
+   and the GitHub GraphQL API -- before setting them aside; and
+   ultimately built out a fairly barebones http server with Ring and
+   Compojure to simply get something out the door.
+
+   I tried out Asami as a backing store but ran into issues with NPEs
+   when a logic variable didn't resolve to existing entities and chose
+   to use Datascript instead because I was more familiar with it and I
+   suspected it would have the least setup and fewest gotchas among
+   the options I had available.
+** Caveats
+   Since this project is time boxed, and primarily meant to showcase
+   some of my skills and be the catalyst for a conversation about my
+   methodologies, there are rough edges.
+
+   I've outlined some of what I would do in the future under the
+   [[* Future Work]] section, but you should know that:
+   - You're probably going to get some errors, depending on how far
+     off the "happy" path you wander
+   - Some things are missing from the repo not because I wouldn't
+     normally include them in a production server, but because they
+     didn't fit within the time and user story constraints of the
+     project.
 ** How to run the server
    To run the server, first ensure you've got clojure installed on
    your machine.
