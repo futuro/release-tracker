@@ -80,10 +80,23 @@
         (format "Something went wrong while trying to track repo \"%s/%s\", double check this repo exists, and check the server logs for details.\n"
                 user repo)))))
 
+(defn latest-release
+  [opts]
+  (let [rid (d/q '[:find (max ?id) .
+                   :in $ ?full-name
+                   :where
+                   [?repo :github.repo/full_name ?full-name]
+                   [?repo :github.repo/releases ?release]
+                   [?release :github.release/id ?id]]
+                 @db/connection (full-name opts))]
+    (d/pull @db/connection '[*] [:github.release/id rid])))
+
 (defn seen
-  [{:keys [user repo]}]
-  (format "You asked me to mark the repo %s/%s as seen\n"
-          user repo))
+  [opts]
+  (d/transact! db/connection
+               [{:github.repo/full_name (full-name opts)
+                 :github.repo/latest-release (latest-release opts)}])
+  (format "The latest release for %s has been marked as seen" (full-name opts)))
 
 (comment
   (def react-repo
