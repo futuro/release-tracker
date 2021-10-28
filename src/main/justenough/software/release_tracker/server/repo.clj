@@ -1,8 +1,8 @@
 (ns justenough.software.release-tracker.server.repo
-  (:require [justenough.software.release-tracker.server.database :as db]
-            [justenough.software.release-tracker.server.github :as ghub]
+  (:require [clojure.string :as str]
             [datascript.core :as d]
-            [clojure.string :as str]
+            [justenough.software.release-tracker.server.database :as db]
+            [justenough.software.release-tracker.server.github :as ghub]
             [taoensso.timbre :as log]))
 
 (defn drop-nil-vals

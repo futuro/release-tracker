@@ -1,16 +1,10 @@
 (ns justenough.software.release-tracker.server.middleware
-  (:require [compojure.core :refer [context defroutes GET POST PUT]]
+  (:require [compojure.core :refer [context defroutes GET POST]]
             [compojure.route :as route]
-            [com.fulcrologic.fulcro.server.api-middleware :as fsa]
-            [com.wsscode.pathom.connect :as pc]
-            [com.wsscode.pathom.core :as p]
-            [com.wsscode.pathom.graphql :as pg]
-            [com.wsscode.pathom.connect.graphql2 :as pg2]
-            [mount.core :refer [defstate]]
             [justenough.software.release-tracker.config :as cfg]
             [justenough.software.release-tracker.server.repo :as repo]
+            [mount.core :refer [defstate]]
             [ring.middleware.defaults :refer [wrap-defaults]]
-            [ring.util.response :refer [response file-response resource-response]]
             [ring.util.response :as resp]))
 
 (defroutes routes

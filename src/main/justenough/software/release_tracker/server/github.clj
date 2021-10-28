@@ -1,12 +1,11 @@
 (ns justenough.software.release-tracker.server.github
-  (:require [justenough.software.release-tracker.config :as cfg]
-            [justenough.software.release-tracker.util :as util]
-            [clj-http.client :as http]
-            [com.wsscode.pathom.connect.graphql2 :as pg2]
-            [com.wsscode.pathom.graphql :as pg]
-            [mount.core :refer [args defstate]]
+  (:require [clj-http.client :as http]
             [clojure.string :as str]
+            [com.wsscode.pathom.graphql :as pg]
             [jsonista.core :as json]
+            [justenough.software.release-tracker.config :as cfg]
+            [justenough.software.release-tracker.util :as util]
+            [mount.core :refer [defstate]]
             [taoensso.timbre :as log]))
 
 (defstate github-secret
