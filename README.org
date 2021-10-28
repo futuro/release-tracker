@@ -73,7 +73,19 @@
    | POST | /repo/<user>/<repo name>/track  | Tracks the given repo                         |
    | POST | /repo/<user>/<repo name>/update | Fetches/updates the releases for the  repo    |
    | POST | /repo/<user>/<repo name>/seen   | Marks the latest release as seen for the repo |
-** TODO Namespaces of primary consideration
+** Namespaces of primary consideration
+   For the server itself, you'll want to start with
+   ~justenough.software.release-tracker.server~, and then
+   ~justenough.software.release-tracker.util~, as well as everything
+   under ~justenough.software.release-tracker.server.*~
+
+   There's also ~justenough.software.dev.user~, which is useful while
+   developing the server.
+
+   Check out ~resources/config/~ for the configuration file. This is
+   also where you'll put your ~secrets.edn~ config.
+
+   Ignore every CLJS file.
 ** TODO Experimental namespaces
 ** Misc
 *** MVP User Stories
