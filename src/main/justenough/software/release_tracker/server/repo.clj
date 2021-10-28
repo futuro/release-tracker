@@ -33,10 +33,10 @@
     (let [db (d/db db/connection)
           repo-id (d/q '[:find ?eid .
                          :in $ ?user ?repo
-                         :where [[?eid :github.repo/name ?repo]
-                                 [?eid :github.repo/owner ?user]]]
+                         :where [?eid :github.repo/name ?repo]
+                         [?eid :github.repo/owner ?oid]
+                         [?oid :login ?user]]
                        db user repo)]
-      ( repo-id)
       (d/entity db repo-id))
     (catch Throwable t
       (log/warn "Trying to get info for " opts " threw the following error" t)
