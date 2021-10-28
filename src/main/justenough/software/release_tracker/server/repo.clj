@@ -33,7 +33,10 @@
 (defn info
   [opts]
   (try
-    (d/q '[:find (pull ?eid [:github.repo/full_name :github.repo/description]) .
+    (d/q '[:find (pull ?eid [:github.repo/full_name
+                             :github.repo/description
+                             {:github.repo/latest-release
+                              [:github.release/published_at]}]) .
            :in $ ?full-name
            :where [?eid :github.repo/full_name ?full-name]]
          @db/connection (full-name opts))
