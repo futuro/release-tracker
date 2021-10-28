@@ -54,16 +54,12 @@
           user repo))
 
 (comment
-  (d/export-data (d/db db/connection))
   (def react-repo
     (let [user "facebook"
           repo "react"]
-      (ghub/fetch-repo {:user user :repo repo})))
+      (->> {:user user :repo repo}
+           ghub/fetch-repo
+           (into {} (remove #(nil? (second %)))))))
 
-  (let [db (d/db db/connection)
-        graph (d/graph db)]
-    (->> (d/q '[:find [?e ...]
-                :where [?e ?license]]
-              db)
-         (map (partial asami.entities.reader/ref->entity graph))))
+  (d/transact! db/connection [react-repo])
   )
