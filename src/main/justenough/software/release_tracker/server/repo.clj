@@ -35,7 +35,7 @@
   (try
     (d/q '[:find (pull ?eid [:github.repo/full_name
                              :github.repo/description
-                             {:github.repo/latest-release
+                             {:github.repo/latest-seen-release
                               [:github.release/published_at]}]) .
            :in $ ?full-name
            :where [?eid :github.repo/full_name ?full-name]]
@@ -98,7 +98,7 @@
   [opts]
   (d/transact! db/connection
                [{:github.repo/full_name (full-name opts)
-                 :github.repo/latest-release (latest-release opts)}])
+                 :github.repo/latest-seen-release (latest-release opts)}])
   (format "The latest release for %s has been marked as seen" (full-name opts)))
 
 (comment
