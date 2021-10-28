@@ -1,115 +1,94 @@
 * Justenough Software Release Tracker
   This repo allows tracking the release status of various public
   projects on Github, to make keeping up with new releases easier.
+** How to run the server
+   To run the server, first ensure you've got clojure installed on
+   your machine.
 
-  This tiny-project was posed to me by Tom Frost at Lumanu as part of
-  the interview process.
-** Project goal
-   This project has three core goals
-   1. Make a basic assessment of my ability to build modern web apps
-      - take as much time as I need, but don't feel like I need to
-        spend more than a few hours
-      - pull in any third party libraries I want/need
-      - look up any documentation I need
-      - if I've got the time, try to tackle one or more of the
-        extended user stories, but they're optional
-   2. Be somewhat close to a real workflow that I would encounter at
-      Lumanu, or other startups
-      - the exercise is intentionally open ended
-      - try to address all of the MVP user stories, but if I get stuck
-        I can submit a partial working prototype that only addresses
-        some of them
-      - ask for help if I'd like clarification or hints if I get stuck
-   3. Allow me the opportunity to showcase my personal flair and
-      skills beyond the basics.
-      - Everything in the spec beyond the MVP user stories (including
-        the UI) can be customized by me.
-      - I can use their initial starter kit or create my own
-      - Feel free to be creative in addressing the user stories
+   Then set up a personal github OAuth token in
+   ~resources/config/secrets.edn~. This file is not tracked by github,
+   and should have the following structure:
+   #+begin_src clojure
+     {:github/auth {:user/token "YOUR TOKEN HERE"}}
+   #+end_src
 
-   There's also this preamble on:
-   #+begin_quote
-   The output should be a web app client. No backend server is
-   required; you can use LocalStorage (or IndexedDB) or any other
-   libraries for storing data.
+   Finally, run ~clojure -M:server~.
 
-   You can clone our starter kit (TypeScript / React)
-   (https://github.com/lumanu/gh-release-monitor) at or create your
-   own project from scratch using any language / framework / libraries
-   you desire.
+   Once it's started, you can interact with it via your favorite HTTP
+   client.
 
-   We expect you to spend in total a similar amount of time to an
-   onsite interview: half a day to one day.
+   There is also an experimental UI portion to this project, which you can
+   read more about at [[* Experimental namespaces]]. The given command
+   above does not meaningfully tie into the UI 
+** TODO Endpoints
+** TODO Namespaces of primary consideration
+** TODO Experimental namespaces
+** Misc
+*** MVP User Stories
+**** DONE Users can add GitHub repos they want to track
+     The app keeps track of the added repos -- using
+     LocalStorage/IndexedDB or similar, no need for a backend -- until
+     the application data is cleared.
+***** DONE repo searching
+****** DONE The actual searching
+       This is complete
+****** DONE Displaying the results
+       I've got a barebones display that just shows the name of the
+       repo.
 
-   Submit your project by sending a link to your repo (or a gzip/zip
-   file containing your entire project) with instructions on how to
-   run it to tom.frost@lumanu.com.
-   #+end_quote
-** MVP User Stories
-*** DONE Users can add GitHub repos they want to track
-    The app keeps track of the added repos -- using
-    LocalStorage/IndexedDB or similar, no need for a backend -- until
-    the application data is cleared.
-**** DONE repo searching
-***** DONE The actual searching
-      This is complete
-***** DONE Displaying the results
-      I've got a barebones display that just shows the name of the
-      repo.
+       This looks pretty ugly atm, so pulling in semantic UI might be
+       nice, and also save me any UI tweaking
+***** DONE a list of repos we're following
+***** DONE a way to add from the search results
+**** DONE Users can see the latest release date for each repo
+**** DONE Users can mark a release as seen
+**** TODO There's a visual indicator for repositories with new releases
+     New since they were last marked seen
+**** DONE There is a way to reload release data for all repos
+     This one needs some clarification what "reload" means. I /suspect/
+     it's "pull the release data from ghub", but I want to make sure it
+     isn't "clear the _seen_ state".
+**** TODO update README with instructions on running the project
+     This wasn't part of the MVP section in the email, but I find it
+     meaningful anyways. Also, it'll fill in for the requirements
+     around having docs on running the project.
+**** No need for formal user or authentication concept at this point
+*** Helpful links
+    - [[https://developer.github.com/v3/libraries/][Octokit libraries for working with the GitHub API]]
+    - [[https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#release][GitHub releases API]]
+    - [[https://docs.github.com/en/rest/reference/search][GitHub search API]]
+    - [[https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage][LocalStorage MDN Docs]]
+    - [[https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API][IndexedDB MDN Docs]]
+*** Optional goals past MVP
+**** Release notes/other data we might want to present in a details view
+**** Mobile responsive?
+**** When to load/update data, what loading states should there be
+**** Filter or sort the repo list
+     To easily see which repos have new releases since last we marked
+     them seen.
+**** Additional personal metadata
+     F.e. the ability to mark a release as something to revisit, or as
+     something to update in other projects
+**** Support more data points to mark new releases
+     Some projects don't use GitHub releases, so support some other
+     data points for marking new releases; perhaps commit activity.
+**** Desktop/mobile notifications
+     This seems somewhat vague, so it probably needs a collab session
+     with Tom to sort out what this means.
 
-      This looks pretty ugly atm, so pulling in semantic UI might be
-      nice, and also save me any UI tweaking
-**** DONE a list of repos we're following
-**** DONE a way to add from the search results
-*** DONE Users can see the latest release date for each repo
-*** DONE Users can mark a release as seen
-*** TODO There's a visual indicator for repositories with new releases
-    New since they were last marked seen
-*** DONE There is a way to reload release data for all repos
-    This one needs some clarification what "reload" means. I /suspect/
-    it's "pull the release data from ghub", but I want to make sure it
-    isn't "clear the _seen_ state".
-*** TODO update README with instructions on running the project
-    This wasn't part of the MVP section in the email, but I find it
-    meaningful anyways. Also, it'll fill in for the requirements
-    around having docs on running the project.
-*** No need for formal user or authentication concept at this point
-** Helpful links
-   - [[https://developer.github.com/v3/libraries/][Octokit libraries for working with the GitHub API]]
-   - [[https://docs.github.com/en/free-pro-team@latest/graphql/reference/objects#release][GitHub releases API]]
-   - [[https://docs.github.com/en/rest/reference/search][GitHub search API]]
-   - [[https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage][LocalStorage MDN Docs]]
-   - [[https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API][IndexedDB MDN Docs]]
-** Optional goals past MVP
-*** Release notes/other data we might want to present in a details view
-*** Mobile responsive?
-*** When to load/update data, what loading states should there be
-*** Filter or sort the repo list
-    To easily see which repos have new releases since last we marked
-    them seen.
-*** Additional personal metadata
-    F.e. the ability to mark a release as something to revisit, or as
-    something to update in other projects
-*** Support more data points to mark new releases
-    Some projects don't use GitHub releases, so support some other
-    data points for marking new releases; perhaps commit activity.
-*** Desktop/mobile notifications
-    This seems somewhat vague, so it probably needs a collab session
-    with Tom to sort out what this means.
+     Alternatively, it's not vague to someone that's done more frontend
+     work, but it'll still require a collab session with Tom.
+**** Add a backend to this service
+     This is worded as such:
+     #+begin_quote
+     How would you build a real server for this / turn this into a
+     service that would store data beyond the local browser?
+     #+end_quote
 
-    Alternatively, it's not vague to someone that's done more frontend
-    work, but it'll still require a collab session with Tom.
-*** Add a backend to this service
-    This is worded as such:
-    #+begin_quote
-    How would you build a real server for this / turn this into a
-    service that would store data beyond the local browser?
-    #+end_quote
-
-    From this, I could see either an RFC-style kind of proposal that
-    talks about the "how" without actually building it, but it might
-    also build it out.
-**** OAuth
-     Personally, I think it'd be neat to sort out OAuth with this, so
-     that we could get access to larger API request limits, as well as
-     private repos, but perhaps that's another goal altogether.
+     From this, I could see either an RFC-style kind of proposal that
+     talks about the "how" without actually building it, but it might
+     also build it out.
+***** OAuth
+      Personally, I think it'd be neat to sort out OAuth with this, so
+      that we could get access to larger API request limits, as well as
+      private repos, but perhaps that's another goal altogether.
