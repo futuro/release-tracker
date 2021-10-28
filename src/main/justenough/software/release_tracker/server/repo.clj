@@ -44,24 +44,20 @@
 
 (defn track
   [{:keys [user repo] :as opts}]
-  (try
-    (let [repo-data (ghub/fetch-repo opts)
-          ;; TODO introduce either :db/ident or a plain :id key to
-          ;; allow for upserts
-          ;;
-          ;; TODO update the keys to have the replacement annotation
-          ;; -- a single quote mark at the end -- to enable
-          ;; replacement of existing data, which, while brittle,
-          ;; should be sufficient for this exercise. Alternatively,
-          ;; query the DB for the repo before fetching and tracking it
-          tx-result (d/transact db/connection
-                                {:tx-data [repo-data]})]
-      "Repo tracked.\n")
-    (catch Exception e
-      (log/warnf "Caught exception while trying to track repo %s/%s, %s"
-                 user repo e)
-      (format "Something went wrong while trying to track repo \"%s/%s\", double check this repo exists, and check the server logs.\n"
-              user repo))))
+  (if (repo-exists? opts)
+    "Repo already being tracked.\n"
+    (try
+      (let [tx-result (->> opts
+                           ghub/fetch-repo
+                           drop-nil-vals
+                           vector
+                           (d/transact! db/connection))]
+        "Repo tracked.\n")
+      (catch Exception e
+        (log/warnf "Caught exception while trying to track repo %s/%s, %s"
+                   user repo e)
+        (format "Something went wrong while trying to track repo \"%s/%s\", double check this repo exists, and check the server logs for details.\n"
+                user repo)))))
 
 (defn seen
   [{:keys [user repo]}]
