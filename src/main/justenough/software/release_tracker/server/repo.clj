@@ -99,12 +99,52 @@
   (format "The latest release for %s has been marked as seen" (full-name opts)))
 
 (comment
+  (def opts
+    {:user "facebook"
+     :repo "react"})
+
   (def react-repo
-    (let [user "facebook"
-          repo "react"]
-      (->> {:user user :repo repo}
-           ghub/fetch-repo
-           (into {} (remove #(nil? (second %)))))))
+    (->> opts
+         ghub/fetch-repo
+         drop-nil-vals))
 
   (d/transact! db/connection [react-repo])
-  )
+
+  (d/datoms @db/connection :eavt)
+
+  (def releases
+    (add-repo-releases opts))
+
+  (-> releases
+      :db-after
+      (d/pull [:github.repo/releases] [:github.repo/full_name (full-name opts)]))
+
+  (d/q '[:find ?name ?id
+         :where [ ?id]
+         [?e1 :github.release/id ?id]
+         [?e1 :github.release/name ?name]]
+       @db/connection)
+
+  (def ttt
+    (d/with @db/connection releases))
+
+  (d/pull
+   (d/db-with @db/connection
+              [{:github.repo/full_name (full-name opts)
+                :github.repo/latest-release (latest-release opts)}])
+   '[:github.repo/latest-release :github.repo/full_name] [:github.repo/full_name (full-name opts)])
+
+  (d/datoms
+   (d/db-with @db/connection
+              [{:github.repo/full_name (full-name opts)
+                :github.repo/latest-release (latest-release opts)}])
+   :eavt)
+
+  (d/pull 
+   (:db-after
+    (d/with @db/connection
+            (map #(assoc % :github.repo/_releases [:github.repo/full_name "facebook/react"])
+                 releases)))
+   '[:github.repo/releases] [:github.repo/full_name "facebook/react"])
+
+  (d/pull @db/connection '[*] 2))
