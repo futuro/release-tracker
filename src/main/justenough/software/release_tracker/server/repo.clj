@@ -85,6 +85,7 @@
 
 (defn latest-release
   [opts]
+  ;; TODO: what happens when there aren't any releases for the project?
   (let [rid (d/q '[:find (max ?id) .
                    :in $ ?full-name
                    :where
