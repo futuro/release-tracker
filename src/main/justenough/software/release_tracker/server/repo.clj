@@ -70,7 +70,9 @@
                            ghub/fetch-repo
                            drop-nil-vals
                            vector
-                           (d/transact! db/connection))]
+                           (d/transact! db/connection))
+
+            release-tx-result (add-repo-releases opts)]
         "Repo tracked.\n")
       (catch Exception e
         (log/warnf "Caught exception while trying to track repo %s/%s, %s"
