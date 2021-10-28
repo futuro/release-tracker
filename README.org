@@ -59,6 +59,10 @@
    Once it's started, you can interact with it via your favorite HTTP
    client.
 
+   Alternatively, use your favorite editor to start up a repl (nREPL
+   perhaps), and make use of the ~:dev~ alias to bring in the extra
+   deps you'll need.
+
    There is also an experimental UI portion to this project, which you can
    read more about at [[* Experimental namespaces]]. The given command
    above does not meaningfully tie into the UI 
