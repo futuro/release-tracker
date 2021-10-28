@@ -133,6 +133,28 @@
     helpful in understanding what's going on under the hood, and I
     recommend installing it if you want to dig deeper into how Fulcro
     is working.
+** Future Work
+   Here's a list of things I'd do next were this an actual production
+   project.
+   - Write tests
+   - Choose a durable backend store that supported Datalog queries,
+     maybe XTDB
+   - Flesh out the edge cases around marking repos without releases as
+     =seen=
+   - Build out Pathom support
+   - Connect the Frontend and Backend code together, moving the GitHub
+     queries and mutations to the backend
+   - Figure out how/if I could get automatic/easy Component Query ->
+     GitHub GraphQL translation support, thus enabling even more
+     seamless query support.
+   - Make the error handling more robust
+   - Separate the data CRUD and display layers in the backend; f.e.
+     the format of output that I'd want for a CLI interface is very
+     different from what I'd want sent back to Fulcro in the browser,
+     and having these concerns colocated causes fragility.
+
+   I'm sure there's more, but these are the ones top of mind at this
+   point.
 ** Misc
 *** MVP User Stories
 **** DONE Users can add GitHub repos they want to track
