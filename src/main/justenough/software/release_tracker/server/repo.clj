@@ -12,6 +12,10 @@
         (remove #(nil? (second %)))
         m))
 
+(defn full-name
+  [{:keys [user repo]}]
+  (format "%s/%s" user repo))
+
 (defn all-repos
   []
   (->> @db/connection
