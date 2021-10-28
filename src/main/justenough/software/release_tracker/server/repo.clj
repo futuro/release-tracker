@@ -5,12 +5,27 @@
             [clojure.string :as str]
             [taoensso.timbre :as log]))
 
+(defn drop-nil-vals
+  "Drops all k/v pairs from `m` where the value is `nil`."
+  [m]
+  (into {}
+        (remove #(nil? (second %)))
+        m))
+
 (defn all-repos
   []
   (->> @db/connection
        (d/q '[:find [?repo-name ...]
               :where [_ :github.repo/full_name ?repo-name]])
        (str/join " ")))
+
+(defn repo-exists?
+  [{:keys [user repo]}]
+  (let [full-name (format "%s/%s" user repo)]
+    (d/q '[:find ?eid .
+           :in $ ?full-name
+           :where [?eid :github.repo/full_name ?full-name]]
+         @db/connection full-name)))
 
 (defn info
   [{:keys [user repo] :as opts}]
