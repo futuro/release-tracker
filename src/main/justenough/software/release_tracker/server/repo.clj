@@ -24,27 +24,22 @@
        (str/join " ")))
 
 (defn repo-exists?
-  [{:keys [user repo]}]
-  (let [full-name (format "%s/%s" user repo)]
-    (d/q '[:find ?eid .
-           :in $ ?full-name
-           :where [?eid :github.repo/full_name ?full-name]]
-         @db/connection full-name)))
+  [opts]
+  (d/q '[:find ?eid .
+         :in $ ?full-name
+         :where [?eid :github.repo/full_name ?full-name]]
+       @db/connection (full-name opts)))
 
 (defn info
-  [{:keys [user repo] :as opts}]
+  [opts]
   (try
-    (let [db (d/db db/connection)
-          repo-id (d/q '[:find ?eid .
-                         :in $ ?user ?repo
-                         :where [?eid :github.repo/name ?repo]
-                         [?eid :github.repo/owner ?oid]
-                         [?oid :login ?user]]
-                       db user repo)]
-      (d/entity db repo-id))
+    (d/q '[:find (pull ?eid [:github.repo/full_name :github.repo/description]) .
+           :in $ ?full-name
+           :where [?eid :github.repo/full_name ?full-name]]
+         @db/connection (full-name opts))
     (catch Throwable t
       (log/warn "Trying to get info for " opts " threw the following error" t)
-      (format "No info available for repo %s/%s" user repo))))
+      (format "No info available for repo %s" (full-name opts)))))
 
 (defn track
   [{:keys [user repo] :as opts}]
