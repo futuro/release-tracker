@@ -90,7 +90,49 @@
    also where you'll put your ~secrets.edn~ config.
 
    Ignore every CLJS file.
-** TODO Experimental namespaces
+** Experimental namespaces
+   The experimental namespaces are all contained in the CLJS files. In
+   here you'll find the work I did at the beginning to build out a UI
+   before building a backend.
+
+   This is functional, though it doesn't contain all of the MVP
+   functionality, and filling in that functionality, as well as
+   connecting it to the backend, is solidly in the =Future Work=
+   category.
+
+   That being said, Fulcro has a lot of really powerful ideas, so if
+   you'd like to see what I built while effectively starting with zero
+   Fulcro knowledge, the following sections
+*** Running the Fulcro code
+    1. Create a ns ~justenough.software.release-tracker.secrets~ at
+       ~src/main/justenough/software/release_tracker/secrets.cljs~
+       with one var, ~user-token~, that contains your GitHub OAuth token
+       as a string. This file is not tracked by git.
+    2. Install yarn or npm
+    3. Run ~yarn install~ or ~npm install~
+    4. Run ~npx shadow-cljs server~
+    5. Open ~http://localhost:9630/build/main~
+    6. Compile the project
+    7. Open ~http://localhost:8000/~
+    8. Search for repos and hit the Track button
+
+    That's about it from the UI perspective; most of the magic is
+    happening in the source code and with how Fulcro manages state and
+    connects components.
+*** Source code
+    ~justenough.software.release-tracker.client~ is a good starting
+    namespace. It defines how the app starts up, and ties the UI and
+    the app state together.
+
+    Next, check out ~justenough.software.release-tracker.ui~, which
+    defines the root component, and thus all sub-components. Following
+    this trail you can see how the Search component is built, as well
+    as how the list of tracked repos is built.
+
+    Leveraging the [[https://chrome.google.com/webstore/detail/fulcro-inspect/meeijplnfjcihnhkpanepcaffklobaal][Fulcro Inspect]] addon for Chrome/Chromium is really
+    helpful in understanding what's going on under the hood, and I
+    recommend installing it if you want to dig deeper into how Fulcro
+    is working.
 ** Misc
 *** MVP User Stories
 **** DONE Users can add GitHub repos they want to track
