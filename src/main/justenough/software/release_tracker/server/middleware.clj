@@ -34,7 +34,7 @@
     (POST "/update" []
       (let [res (repo/add-repo-releases {:user user :repo repo})]
         (if (string? res)
-          (-> res resp/response (resp/status 500))
+          (resp/bad-request res)
           (resp/response "Successfully updated repo releases.\n"))))
     (POST "/seen" []
       (resp/response
