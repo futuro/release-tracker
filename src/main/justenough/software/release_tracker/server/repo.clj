@@ -93,14 +93,23 @@
                    [?repo :github.repo/releases ?release]
                    [?release :github.release/id ?id]]
                  @db/connection (full-name opts))]
-    (d/pull @db/connection '[*] [:github.release/id rid])))
+    [:github.release/id rid]))
 
 (defn seen
   [opts]
-  (d/transact! db/connection
-               [{:github.repo/full_name (full-name opts)
-                 :github.repo/latest-seen-release (latest-release opts)}])
-  (format "The latest release for %s has been marked as seen" (full-name opts)))
+  (let [latest-release (latest-release opts)
+        full-name (full-name opts)]
+    (if-not (second latest-release) ;; There's no release to mark as seen
+      (format "No releases available for repo %s.\n" full-name)
+      (try
+        (d/transact! db/connection
+                     [{:github.repo/full_name full-name
+                       :github.repo/latest-seen-release latest-release}])
+        (format "The latest release for %s has been marked as seen" full-name)
+        (catch Throwable t
+          (log/error "Caught throwable while marking release as seen: " t)
+          (format "Encountered an error while marking the releases for %s as seen"
+                  full-name))))))
 
 (comment
   (def opts
