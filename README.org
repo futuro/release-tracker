@@ -20,7 +20,17 @@
    There is also an experimental UI portion to this project, which you can
    read more about at [[* Experimental namespaces]]. The given command
    above does not meaningfully tie into the UI 
-** TODO Endpoints
+** Endpoints
+   You can find the route definitions in the
+   ~justenough.software.release-tracker.server.middleware~ namespace,
+   but here's a short overview:
+   | VERB | Route                           | Returns                                       |
+   |------+---------------------------------+-----------------------------------------------|
+   | GET  | /repo                           | All of the repos currently tracked            |
+   | GET  | /repo/<user>/<repo name>        | Info on a specific repo                       |
+   | POST | /repo/<user>/<repo name>/track  | Tracks the given repo                         |
+   | POST | /repo/<user>/<repo name>/update | Fetches/updates the releases for the  repo    |
+   | POST | /repo/<user>/<repo name>/seen   | Marks the latest release as seen for the repo |
 ** TODO Namespaces of primary consideration
 ** TODO Experimental namespaces
 ** Misc
